@@ -27,6 +27,8 @@ class AppStrings {
   static const String willSnow = 'Will Snow';
   static const String willRain = 'Will Rain';
   static const String cityDialgoueText = 'Enter City Name';
+  static const String wait = 'Creating Account...';
+  static const String enter = 'Please enter your full name.';
 
 
   static const String youCanPlay = "You can play Tennis Today!";
