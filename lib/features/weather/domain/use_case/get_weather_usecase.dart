@@ -8,7 +8,7 @@ class GetWeatherUseCase {
 
   GetWeatherUseCase(this.repository);
 
-  Future<WeatherEntity> call(String city, DateTime date) async {
+  Future <WeatherEntity> call(String city, DateTime date) async {
     return await repository.getWeather(city, date);
   }
 }

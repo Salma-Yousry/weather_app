@@ -14,21 +14,23 @@ import 'package:injectable/injectable.dart' as _i2;
 import '../../features/auth/data/datasources/remote_data_source.dart' as _i4;
 import '../../features/auth/data/repositories/auth_repository_impl.dart' as _i9;
 import '../../features/auth/domain/repositories/auth_repository.dart' as _i8;
-import '../../features/auth/domain/use_case/login_use_case.dart' as _i11;
-import '../../features/auth/domain/use_case/signup_usecase.dart' as _i12;
+import '../../features/auth/domain/use_case/login_use_case.dart' as _i12;
+import '../../features/auth/domain/use_case/signup_usecase.dart' as _i13;
 import '../../features/auth/presentation/cubit/login_cubit/login_cubit.dart'
-    as _i14;
-import '../../features/auth/presentation/cubit/signup_cubit/signup_cubit.dart'
     as _i15;
+import '../../features/auth/presentation/cubit/signup_cubit/signup_cubit.dart'
+    as _i16;
 import '../../features/weather/data/datasource/remote_data_source.dart' as _i5;
 import '../../features/weather/data/repositories/weather_repository_impl.dart'
     as _i7;
 import '../../features/weather/domain/repositories/weather_repository.dart'
     as _i6;
-import '../../features/weather/domain/use_case/get_weather_usecase.dart'
+import '../../features/weather/domain/use_case/get_tennis_prediction_use_case.dart'
     as _i10;
+import '../../features/weather/domain/use_case/get_weather_usecase.dart'
+    as _i11;
 import '../../features/weather/presentation/cubit/weather_cubit/weather_cubit.dart'
-    as _i13;
+    as _i14;
 import '../network/network_service.dart' as _i3;
 
 extension GetItInjectableX on _i1.GetIt {
@@ -50,18 +52,23 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i7.WeatherRepositoryImpl(gh<_i5.RemoteDataSource>()));
     gh.lazySingleton<_i8.AuthRepository>(() =>
         _i9.AuthRepositoryImpl(remoteDataSource: gh<_i4.RemoteDataSource>()));
-    gh.factory<_i10.GetWeatherUseCase>(
-        () => _i10.GetWeatherUseCase(gh<_i6.WeatherRepository>()));
-    gh.factory<_i11.LoginUseCase>(
-        () => _i11.LoginUseCase(authRepository: gh<_i8.AuthRepository>()));
-    gh.factory<_i12.SignupUseCase>(
-        () => _i12.SignupUseCase(authRepository: gh<_i8.AuthRepository>()));
-    gh.factory<_i13.WeatherCubit>(
-        () => _i13.WeatherCubit(gh<_i10.GetWeatherUseCase>()));
-    gh.factory<_i14.LoginCubit>(
-        () => _i14.LoginCubit(loginUseCase: gh<_i11.LoginUseCase>()));
-    gh.factory<_i15.SignupCubit>(
-        () => _i15.SignupCubit(signupUseCase: gh<_i12.SignupUseCase>()));
+    gh.factory<_i10.GetTennisPredictionUseCase>(
+        () => _i10.GetTennisPredictionUseCase(gh<_i6.WeatherRepository>()));
+    gh.factory<_i11.GetWeatherUseCase>(
+        () => _i11.GetWeatherUseCase(gh<_i6.WeatherRepository>()));
+    gh.factory<_i12.LoginUseCase>(
+        () => _i12.LoginUseCase(authRepository: gh<_i8.AuthRepository>()));
+    gh.factory<_i13.SignupUseCase>(
+        () => _i13.SignupUseCase(authRepository: gh<_i8.AuthRepository>()));
+    gh.factory<_i14.WeatherCubit>(() => _i14.WeatherCubit(
+          gh<_i11.GetWeatherUseCase>(),
+          gh<_i10.GetTennisPredictionUseCase>(),
+          gh<_i6.WeatherRepository>(),
+        ));
+    gh.factory<_i15.LoginCubit>(
+        () => _i15.LoginCubit(loginUseCase: gh<_i12.LoginUseCase>()));
+    gh.factory<_i16.SignupCubit>(
+        () => _i16.SignupCubit(signupUseCase: gh<_i13.SignupUseCase>()));
     return this;
   }
 }

@@ -1,3 +1,5 @@
+import 'forecast_entity.dart';
+
 class WeatherEntity {
   final String city;
   final double temperature;
@@ -7,69 +9,58 @@ class WeatherEntity {
   final DateTime selectedDate;
   final double maxtempC;
   final List<ForecastEntity> forecast;
+  final String description;
 
   WeatherEntity({
     required this.city,
-    required this.windSpeed,
     required this.humidity,
+    required this.windSpeed,
     required this.temperature,
     required this.condition,
     required this.selectedDate,
     required this.forecast,
-    required this.maxtempC
+    required this.maxtempC,
+    required this.description,
   });
 
+  /// **تحويل `WeatherModel` إلى `WeatherEntity` باستخدام `fromJson`**
   factory WeatherEntity.fromJson(Map<String, dynamic> json) {
     return WeatherEntity(
       city: json['location']?['name'] ?? 'Unknown',
-      temperature: (json['current']?['temp_c'] ?? 0.0).toDouble(),
-      humidity: (json['current']?['humidity'] ?? 0.0).toDouble(),
-      windSpeed: (json['current']?['wind_kph'] ?? 0.0).toDouble(),
+      temperature: (json['current']?['temp_c'] as num?)?.toDouble() ?? 0.0,
+      humidity: (json['current']?['humidity'] as num?)?.toDouble() ?? 0.0,
+      windSpeed: (json['current']?['wind_kph'] as num?)?.toDouble() ?? 0.0,
+      maxtempC: (json['forecast']?['forecastday']?[0]?['day']?['maxtemp_c'] as num?)?.toDouble() ?? 0.0,
       condition: json['current']?['condition']?['text'] ?? 'Unknown',
-      maxtempC: (json['current']?['maxtemp_C'] ?? 0.0).toDouble(),
-      selectedDate: DateTime.now(),
-      forecast: (json['forecast']?['forecastday'] as List<dynamic>?)?.map((day) => ForecastEntity.fromJson(day)).toList() ?? [],
+      description: json['current']?['condition']?['text'] ?? 'Unknown', // ✅ تمرير وصف الطقس
+      selectedDate: (json['forecast']?['forecastday'] != null && (json['forecast']['forecastday'] as List).isNotEmpty)
+          ? DateTime.parse(json['forecast']['forecastday'][0]['date'])
+          : DateTime.now(),
+      forecast: (json['forecast']?['forecastday'] as List?)
+          ?.map((e) => ForecastEntity.fromJson(e))
+          .toList() ??
+          [],
     );
   }
-}
 
-class ForecastEntity {
-  final String date;
-  final DayEntity day;
 
-  ForecastEntity({required this.date, required this.day});
+  List<int> toTennisModelInput() {
+    int outlookIsRainy = (description?.toLowerCase() ?? '').contains('rain') ? 1 : 0;
+    int outlookIsSunny = (description?.toLowerCase() ?? '').contains('sunny') ? 1 : 0;
+    int temperatureIsHot = temperature > 25.0 ? 1 : 0;
+    int temperatureIsMild = (temperature >= 15.0 && temperature <= 25.0) ? 1 : 0;
+    int humidityIsNormal = humidity.toInt() <= 60 ? 1 : 0;
 
-  factory ForecastEntity.fromJson(Map<String, dynamic> json) {
-    return ForecastEntity(
-      date: json['date'] ?? '',
-      day: DayEntity.fromJson(json['day'] ?? {}),
-    );
+    return [
+      outlookIsRainy,
+      outlookIsSunny,
+      temperatureIsHot,
+      temperatureIsMild,
+      humidityIsNormal,
+    ];
   }
+
 }
 
-class DayEntity {
-  final double avgtempC;
-  final int avghumidity;
-  final int dailyChanceOfRain;
-  final double maxWindKph;
-  final double maxtempC;
 
-  DayEntity({
-    required this.avgtempC,
-    required this.avghumidity,
-    required this.dailyChanceOfRain,
-    required this.maxWindKph,
-    required this.maxtempC
-  });
-
-  factory DayEntity.fromJson(Map<String, dynamic> json) {
-    return DayEntity(
-      avgtempC: (json['avgtemp_c'] ?? 0.0).toDouble(),
-      avghumidity: json['avghumidity'] ?? 0,
-      maxtempC: json['maxtemp_C'] ?? 0,
-      dailyChanceOfRain: json['daily_chance_of_rain'] ?? 0,
-      maxWindKph: (json['maxwind_kph'] ?? 0.0).toDouble(),
-    );
-  }
-}
 

@@ -1,30 +1,25 @@
 class AppStrings {
-  static const appName = "OutOrNot";
-  //login screen strings
+  static const welcome = "Welcome";
+
   static const loginBtnText = "Login";
   static const signUpBtnText = "Sign Up";
   static const emailText = "Email";
   static const passwordText = "Password";
-  static const forgotPasswordText = "Forgot Password?";
-  static const loginScreenTitle = "Welcome Back!";
-  static const loginScreenSubTitle = "Login To See Weather Updates";
+  static const ok = "Ok";
+  static const cancel = "Cancel";
+  static const search = "Search";
   static const noAccountText = "Don't have an account? Sign Up";
-  static const passwordErrorText = "Enter a valid password";
-  static const emailErrorText = "Enter a valid email";
-  static const nameErrorText = "Enter a valid name";
-  //register screen strings
+
+
   static const registerBtnText = "Register";
-  static const nameText = "Name";
-  static const registerScreenTitle = "Create Account";
-  static const registerScreenSubTitle = "Register To See Weather Updates";
+  static const nameText = "FULL NAME";
   static const haveAccountText = "Already have an account? Login";
 
   static const String registerSuccessMessage = "Registration Successful";
-  static const String registerFailureMessage = "Registration Failed";
-  static const String loginSuccessMessage = "Login Successful";
-  static const String loginFailureMessage = "Login Failed";
+  static const String Searchcity = "Search for a city";
+  static const String Checkingweatherin = "Checking weather in";
+  static const String GetPredictions = "Get Predictions";
 
-  //Weather Screen App Strings
   static const String minTemp = 'Min Temp';
   static const String maxTemp = 'Max Temp';
   static const String humidity = 'Humidity';
@@ -33,10 +28,10 @@ class AppStrings {
   static const String willRain = 'Will Rain';
   static const String cityDialgoueText = 'Enter City Name';
 
-  //ai result screen strings
-  static const String safeOutside = "It's Safe To Go Out";
-  static const String notSafeOutside = "It's Not Safe To Go Out";
 
-  //error msgs
-  static const String noInternet = 'No Internet Connection';
+  static const String youCanPlay = "You can play Tennis Today!";
+  static const String youCanNoTPlay = "Better not to play Tennis today!";
+
+
+  static const String errorPrediction = 'error Prediction';
 }

@@ -28,7 +28,7 @@ class WeatherModel {
       temperature: (map['current']?['temp_c'] as num?)?.toDouble() ?? 0.0,
       humidity: (map['current']?['humidity'] as num?)?.toDouble() ?? 0.0,
       windSpeed: (map['current']?['wind_kph'] as num?)?.toDouble() ?? 0.0,
-      maxtempC: (map['current']?['maxtemp_C'] as num?)?.toDouble() ?? 0.0,
+      maxtempC: (map['forecast']?['forecastday']?[0]?['day']?['maxtemp_c'] as num?)?.toDouble() ?? 0.0, // تأكد من المسار الصحيح
       condition: map['current']?['condition']?['text'] ?? 'Unknown',
       selectedDate: (map['forecast']?['forecastday'] != null && (map['forecast']['forecastday'] as List).isNotEmpty)
           ? DateTime.parse(map['forecast']['forecastday'][0]['date'])
@@ -37,18 +37,7 @@ class WeatherModel {
     );
   }
 
-  WeatherEntity toEntity() {
-    return WeatherEntity(
-      city: city,
-      temperature: temperature,
-      humidity: humidity,
-      windSpeed: windSpeed,
-      condition: condition,
-      selectedDate: selectedDate,
-        maxtempC: maxtempC,
-      forecast: forecast.map((e) => e.toEntity()).toList(),
-    );
-  }
+
 }
 
 

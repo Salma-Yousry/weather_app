@@ -1,16 +1,37 @@
 class ForecastEntity {
   final String date;
   final DayEntity day;
+  final double? maxTemp;
+  final double? minTemp;
 
-  ForecastEntity({required this.date, required this.day});
+  ForecastEntity({
+    required this.date,
+    required this.day,
+    this.maxTemp,
+    this.minTemp,
+  });
+
 
   factory ForecastEntity.fromJson(Map<String, dynamic> json) {
     return ForecastEntity(
-      date: json['date'] ?? '',
+      date: json['date'],
       day: DayEntity.fromJson(json['day'] ?? {}),
+      maxTemp: (json['day']?['maxtemp_c'] ?? 0.0).toDouble(),
+      minTemp: (json['day']?['mintemp_c'] ?? 0.0).toDouble(),
     );
   }
+
+
+  Map<String, dynamic> toJson() {
+    return {
+      'date': date,
+      'day': day,
+      'maxtemp_c': maxTemp,
+      'mintemp_c': minTemp,
+    };
+  }
 }
+
 
 class DayEntity {
   final double avgtempC;

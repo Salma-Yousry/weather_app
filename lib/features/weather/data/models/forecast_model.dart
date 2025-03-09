@@ -1,15 +1,24 @@
-import '../../domain/entities/weather_entity.dart';
+import '../../domain/entities/Forecast_Entity.dart';
 
 class ForecastModel {
   final String date;
   final DayModel day;
+  final double? maxTemp;
+  final double? minTemp;
 
-  ForecastModel({required this.date, required this.day});
+  ForecastModel({
+    required this.date,
+    required this.day,
+    this.maxTemp,
+    this.minTemp,
+  });
 
   factory ForecastModel.fromJson(Map<String, dynamic> json) {
     return ForecastModel(
       date: json['date'] ?? '',
       day: DayModel.fromJson(json['day'] ?? {}),
+      maxTemp: (json['day']?['maxtemp_c'] ?? 0.0).toDouble(),
+      minTemp: (json['day']?['mintemp_c'] ?? 0.0).toDouble(),
     );
   }
 
@@ -17,9 +26,13 @@ class ForecastModel {
     return ForecastEntity(
       date: date,
       day: day.toEntity(),
+      maxTemp: maxTemp,
+      minTemp: minTemp,
     );
   }
 }
+
+
 
 class DayModel {
   final double avgtempC;

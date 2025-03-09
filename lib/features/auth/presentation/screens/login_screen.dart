@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/core/utils/app_strings.dart';
 import '../../../../core/routes_manager/routes.dart';
 import '../../../../core/utils/color_manager.dart';
 import '../../../../core/utils/font_manager.dart';
@@ -9,9 +10,6 @@ import '../../../../core/widget/custom_elevated_button.dart';
 import '../../../../core/widget/dialog_until.dart';
 import '../../../../core/widget/validators.dart';
 import '../../../weather/presentation/screens/weather_screen.dart';
-import '../../data/datasources/remote_data_source.dart';
-import '../../data/repositories/auth_repository_impl.dart';
-import '../../domain/use_case/login_use_case.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../cubit/login_cubit/login_cubit.dart';
@@ -37,7 +35,7 @@ class LoginScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    'LOGIN',
+                    AppStrings.loginBtnText,
                     textAlign: TextAlign.center,
                     style: getBoldStyle(
                       fontSize: FontSize.s24,
@@ -46,14 +44,14 @@ class LoginScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 8.w),
                   CustomTextFormField(
-                    label: 'Email',
+                    label: AppStrings.emailText,
                     controller: emailController,
                     keyboardType: TextInputType.emailAddress,
                     validator: AppValidators.validateEmail,
                   ),
                   SizedBox(height: 10.w),
                   CustomTextFormField(
-                    label: 'Password',
+                    label: AppStrings.passwordText,
                     controller: passwordController,
                     obscureText: true,
                     keyboardType: TextInputType.number,
@@ -76,14 +74,14 @@ class LoginScreen extends StatelessWidget {
                         DialogUtils.hideLoading(context);
                         DialogUtils.showMessage(
                           context: context,
-                          posActionName: 'OK',
+                          posActionName: AppStrings.ok,
                           message: state.error,
                         );
                       }
                     },
                     builder: (context, state) {
                       return CustomElevatedButton(
-                        label: 'LOGIN',
+                        label: AppStrings.loginBtnText,
                         onTap: () {
                           if (formKey.currentState!.validate()) {
                             context.read<LoginCubit>().login(
@@ -102,7 +100,7 @@ class LoginScreen extends StatelessWidget {
                       Navigator.of(context).pushNamed(Routes.signUp);
                     },
                     child: Text(
-                      "DON'T HAVE AN ACCOUNT?",
+                      AppStrings.noAccountText,
                       style: getMediumStyle(
                         fontSize: FontSize.s20,
                         color: ColorManager.blue,

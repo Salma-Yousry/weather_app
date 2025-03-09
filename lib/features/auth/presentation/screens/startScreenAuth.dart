@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../../core/routes_manager/routes.dart';
+import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/color_manager.dart';
 import '../../../../core/utils/font_manager.dart';
 import '../../../../core/utils/styles_manager.dart';
@@ -17,7 +18,7 @@ class StartScreenAuth extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CustomElevatedButton(
-              label: 'SIGN UP',
+              label: AppStrings.signUpBtnText,
               onTap: () {
                 Navigator.of(context).pushNamed(Routes.signUp);
               },
@@ -29,7 +30,7 @@ class StartScreenAuth extends StatelessWidget {
             ),
             SizedBox(height: AppSize.s20),
             CustomElevatedButton(
-              label: 'LOGIN',
+              label: AppStrings.loginBtnText,
               onTap: () {
                 Navigator.of(context).pushNamed(Routes.logIn);
               },

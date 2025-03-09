@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:weather_app/core/utils/app_strings.dart';
 import '../../../../core/utils/color_manager.dart';
 import '../../../../core/utils/font_manager.dart';
 import '../../../../core/utils/styles_manager.dart';
@@ -36,7 +37,7 @@ class SignupScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    'SIGN UP',
+                    AppStrings.signUpBtnText,
                     textAlign: TextAlign.center,
                     style: getBoldStyle(
                       fontSize: FontSize.s24,
@@ -45,18 +46,18 @@ class SignupScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 8.w),
                   CustomTextFormField(
-                    label: 'FULL NAME',
+                    label: AppStrings.nameText,
                     controller: nameController,
                     validator: (text) => text == null || text.trim().isEmpty ? 'Please enter your full name.' : null,
                   ),
                   CustomTextFormField(
-                    label: 'Email',
+                    label: AppStrings.emailText,
                     controller: emailController,
                     keyboardType: TextInputType.emailAddress,
                     validator: AppValidators.validateEmail,
                   ),
                   CustomTextFormField(
-                    label: 'Password',
+                    label: AppStrings.passwordText,
                     controller: passwordController,
                     obscureText: true,
                     keyboardType: TextInputType.visiblePassword,
@@ -81,7 +82,7 @@ class SignupScreen extends StatelessWidget {
                     },
                     builder: (context, state) {
                       return CustomElevatedButton(
-                        label: 'SIGN UP',
+                        label: AppStrings.signUpBtnText,
                         onTap: () {
                           if (formKey.currentState!.validate()) {
                             context.read<SignupCubit>().signup(
@@ -97,7 +98,7 @@ class SignupScreen extends StatelessWidget {
                   TextButton(
                     onPressed: () => Navigator.pop(context),
                     child: Text(
-                      "ALREADY HAVE AN ACCOUNT?",
+                      AppStrings.haveAccountText,
                       style: getMediumStyle(fontSize: FontSize.s20, color: ColorManager.blue),
                     ),
                   ),
