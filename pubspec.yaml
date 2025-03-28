@@ -42,10 +42,10 @@ dependencies:
   dartz: ^0.10.1
   firebase_core:
   cloud_firestore:
+  firebase_auth:
   flutter_slidable: ^3.1.1
   provider: ^6.1.2
   shared_preferences: ^2.2.3
-  firebase_auth:
   flutter_native_splash:
   http: ^1.1.0
   intl: ^0.19.0

@@ -11,7 +11,6 @@ import '../../../domain/use_case/get_weather_usecase.dart';
 class WeatherCubit extends Cubit<WeatherState> {
   final GetWeatherUseCase getWeatherUseCase;
   final GetTennisPredictionUseCase getTennisPredictionUseCase;
-  final WeatherRepository repository;
   List<WeatherEntity> weatherList = [];
   int selectedIndex = 0;
   String selectedCity = "Cairo";
@@ -19,7 +18,6 @@ class WeatherCubit extends Cubit<WeatherState> {
   WeatherCubit(
       this.getWeatherUseCase,
       this.getTennisPredictionUseCase,
-      this.repository,
       ) : super(WeatherInitial());
 
   Future<void> fetchWeather(String city, DateTime date) async {
@@ -36,19 +34,19 @@ class WeatherCubit extends Cubit<WeatherState> {
   }
 
 
-
   Future<void> getTennisPredictionData() async {
     if (weatherList.isEmpty || selectedIndex >= weatherList.length) return;
 
     emit(TennisPredictionLoadingState());
 
-    try {
-      final prediction = await repository.predictTennisPlay(weatherList[selectedIndex]);
-      emit(TennisPredictionSuccessState(prediction: prediction));
-    } catch (e) {
-      emit(TennisPredictionErrorState(message: e.toString()));
-    }
+    final result = await getTennisPredictionUseCase(weatherList[selectedIndex]);
+
+    result.fold(
+          (failure) => emit(TennisPredictionErrorState(message: failure.toString())),
+          (prediction) => emit(TennisPredictionSuccessState(prediction: prediction)),
+    );
   }
+
 
   void setSelectedIndex(int index) {
     if (index >= 0 && index < weatherList.length) {

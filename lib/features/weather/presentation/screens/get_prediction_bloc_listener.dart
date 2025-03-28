@@ -23,7 +23,7 @@ class GetPredictionBlocListener extends StatelessWidget {
                 content: Text(
                   state.prediction == 1
                       ? AppStrings.youCanPlay
-                      : AppStrings.youCanPlay,
+                      : AppStrings.youCanNoTPlay,
                   style: TextStyle(fontSize: 20),
                 ),
                 actions: [

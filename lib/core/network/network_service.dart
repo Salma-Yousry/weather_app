@@ -21,19 +21,35 @@ class NetworkService {
     }
   }
   Future<int> post(List<int> features) async {
-    final response = await http.post(
-      Uri.parse(AppConstants.aiModelBaseURL),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({'features': features}),
-    );
+    try {
+      print("Sending request to: ${AppConstants.aiModelBaseURL}");
+      print("Request body: ${json.encode({'features': features})}");
 
-    if (response.statusCode == 200) {
-      final prediction = json.decode(response.body)['prediction'];
-      return prediction[0];
-    } else {
-      throw Exception("Failed to fetch prediction: ${response.statusCode} - ${response.body}");
+      final response = await http.post(
+        Uri.parse(AppConstants.aiModelBaseURL),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({'features': features}),
+      );
+
+      print("Response Status Code: ${response.statusCode}");
+      print("Response Body: ${response.body}");
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        if (data.containsKey('prediction')) {
+          return data['prediction'][0];
+        } else {
+          throw Exception("Response does not contain 'prediction' key");
+        }
+      } else {
+        throw Exception("Failed to fetch prediction: ${response.statusCode} - ${response.body}");
+      }
+    } catch (e) {
+      print("Exception: $e");
+      throw Exception("Error in post: $e");
     }
   }
+
 }
 
 

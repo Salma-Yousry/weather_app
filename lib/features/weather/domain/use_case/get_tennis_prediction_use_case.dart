@@ -1,6 +1,8 @@
 
+import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../core/errors/dio_errors.dart';
 import '../entities/weather_entity.dart';
 import '../repositories/weather_repository.dart';
 
@@ -10,8 +12,12 @@ class GetTennisPredictionUseCase {
 
   GetTennisPredictionUseCase(this.weatherRepository);
 
-  Future<int> call(WeatherEntity weather) async =>
-      await weatherRepository.predictTennisPlay(weather);
-
-
+  Future<Either<Failure, int>> call(WeatherEntity weather) async {
+    try {
+      final prediction = await weatherRepository.predictTennisPlay(weather);
+      return Right(prediction);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 }

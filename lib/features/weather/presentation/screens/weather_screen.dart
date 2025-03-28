@@ -18,7 +18,8 @@ class WeatherScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => WeatherCubit(getIt<GetWeatherUseCase>(), getIt<GetTennisPredictionUseCase>(),getIt<WeatherRepository>())..fetchWeather("Cairo", DateTime.now()),
+      create: (context) => getIt<WeatherCubit>()..fetchWeather("Cairo", DateTime.now()),
+
       child: Scaffold(
         backgroundColor: ColorManager.darkBlue,
         appBar: AppBar(

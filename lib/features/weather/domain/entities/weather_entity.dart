@@ -32,7 +32,7 @@ class WeatherEntity {
       windSpeed: (json['current']?['wind_kph'] as num?)?.toDouble() ?? 0.0,
       maxtempC: (json['forecast']?['forecastday']?[0]?['day']?['maxtemp_c'] as num?)?.toDouble() ?? 0.0,
       condition: json['current']?['condition']?['text'] ?? 'Unknown',
-      description: json['current']?['condition']?['text'] ?? 'Unknown', // ✅ تمرير وصف الطقس
+      description: json['current']?['condition']?['text'] ?? 'Unknown',
       selectedDate: (json['forecast']?['forecastday'] != null && (json['forecast']['forecastday'] as List).isNotEmpty)
           ? DateTime.parse(json['forecast']['forecastday'][0]['date'])
           : DateTime.now(),
